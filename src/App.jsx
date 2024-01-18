@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import * as THREE from "three";
+import { useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import "./App.css";
+import feather from "./assets/feather.png";
+// Want to create a floating particle background that reacts to mouse movement
+function Particle({ x, y, z }) {
+  const mesh = useRef();
+  const { viewport, pointer } = useThree();
+  const ref = useRef();
+  const [data] = useState({
+    x: x,
+    y: y,
+  });
+  useFrame(() => {
+    mesh.current.position.x = data.x;
+    mesh.current.position.y = data.y;
+  });
+  return (
+    <mesh ref={mesh}>
+      <sphereGeometry />
+      <meshBasicMaterial color="blue" />
+    </mesh>
+  );
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+        <a target="_blank">
+          <img src={feather} className="logo" alt="feather logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Canvas>
+        <ambientLight />
+        <pointLight position={[10, 10, 10]} />
+        <Particle x={0} y={0} z={0} />
+      </Canvas>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
