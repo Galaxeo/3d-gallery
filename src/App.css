@@ -1,6 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+
+
+html, body, #root {
+  font-family: 'Fira Sans', sans-serif;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 .logo {
   height: auto;
-  width: 20vw;
+  width: max(20vw, 200px);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -9,6 +20,7 @@
   animation-fill-mode: forwards;
   pointer-events: none;
 }
+
 
 /* Animation from Silo Creativo */
 @keyframes silo-fade {
