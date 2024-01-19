@@ -8,7 +8,7 @@ function Dot({ x, y, z }) {
   const [width, setWidth] = useState(viewport.width);
   const ref = useRef();
   useFrame(() => {
-    ref.current.position.set(x * width + pointer.x, y * width + pointer.y, z);
+    ref.current.position.set(x * width - pointer.x, y * width - pointer.y, z);
   });
   useEffect(() => {
     const handleResize = () => {

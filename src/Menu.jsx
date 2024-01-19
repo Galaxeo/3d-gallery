@@ -6,17 +6,25 @@ function HoverWord({ str, position, fontSize, color }) {
   const [hovered, setHovered] = useState(false);
   const over = (e) => (e.stopPropagation(), setHovered(true));
   const out = () => setHovered(false);
+  const wordRef = useRef();
   useEffect(() => {
     if (hovered) document.body.style.cursor = "pointer";
     return () => (document.body.style.cursor = "auto");
   }, [hovered]);
+  useFrame(() => {
+    wordRef.current.material.color.set(hovered ? "red" : color);
+  });
   return (
     <Text
+      ref={wordRef}
       onPointerOver={over}
       onPointerOut={out}
       position={position}
       color={color}
       fontSize={fontSize}
+      onClick={() => {
+        console.log("here");
+      }}
     >
       {str}
     </Text>
@@ -37,7 +45,7 @@ function Menu() {
         <HoverWord
           str="Hello world"
           position={[0, 1, 0.1]}
-          fontSize={0.1}
+          fontSize={0.3}
           color="white"
         />
       </mesh>
