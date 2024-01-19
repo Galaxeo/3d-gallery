@@ -1,15 +1,22 @@
-import Background from "./Background";
 import "./App.css";
-import feather from "./assets/feather.png";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Menu from "./Menu";
+import Background from "./Background";
+import { Canvas } from "@react-three/fiber";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Menu />,
+  },
+]);
 
 function App() {
   return (
     <>
-      <Background></Background>
-      <div>
-        <img src={feather} className="logo" alt="feather logo" />
-        <p className="logo">Welcome!</p>
-      </div>
+      <Canvas gl={{ alpha: false }} camera={{ near: 0.01, far: 10, fov: 60 }}>
+        <RouterProvider router={router}></RouterProvider>
+        <Background></Background>
+      </Canvas>
     </>
   );
 }

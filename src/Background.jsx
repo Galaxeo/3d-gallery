@@ -1,15 +1,24 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
 import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
 // Want to create a floating particle background that reacts to mouse movement
 function Dot({ x, y, z }) {
-  const { viewport, camera, pointer } = useThree();
-  const { width, height } = viewport.getCurrentViewport(camera, [0, 0, 0]);
+  const { viewport, pointer } = useThree();
+  const [width, setWidth] = useState(viewport.width);
   const ref = useRef();
   useFrame(() => {
-    ref.current.position.set(x * height + pointer.x, y * height + pointer.y, z);
+    ref.current.position.set(x * width + pointer.x, y * width + pointer.y, z);
   });
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(viewport.width);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [viewport.width]);
   return (
     <mesh ref={ref}>
       <sphereGeometry args={[0.02]} />
@@ -17,7 +26,7 @@ function Dot({ x, y, z }) {
     </mesh>
   );
 }
-function Effect({ count = 1024 }) {
+export function Background({ count = 1024 }) {
   const { camera } = useThree();
   useEffect(() => {
     camera.position.z = 10;
@@ -42,22 +51,12 @@ function Effect({ count = 1024 }) {
       {particles}
       <EffectComposer>
         <DepthOfField
-          target={[0, 0, 90]}
+          target={[0, 0, 1]}
           focalLength={0.2}
-          bokehScale={5}
+          bokehScale={2}
           height={700}
         ></DepthOfField>
       </EffectComposer>
-    </>
-  );
-}
-
-function Background() {
-  return (
-    <>
-      <Canvas gl={{ alpha: false }} camera={{ near: 0.01, far: 10, fov: 60 }}>
-        <Effect></Effect>
-      </Canvas>
     </>
   );
 }
