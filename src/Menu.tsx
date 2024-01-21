@@ -1,20 +1,23 @@
-import * as THREE from "three";
 import { useEffect, useState, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Image, Text } from "@react-three/drei";
 import "./App.css";
-import feather from "./assets/feather-background.png";
 function HoverWord({ str, position, fontSize, color }) {
   const [hovered, setHovered] = useState(false);
   const over = (e) => (e.stopPropagation(), setHovered(true));
   const out = () => setHovered(false);
-  const wordRef = useRef();
+  const wordRef = useRef<Text>();
   useEffect(() => {
     if (hovered) document.body.style.cursor = "pointer";
-    return () => (document.body.style.cursor = "auto");
+    return () => {
+      document.body.style.cursor = "auto";
+      return void 0;
+    };
   }, [hovered]);
   useFrame(() => {
-    wordRef.current.material.color.set(hovered ? "white" : color);
+    if (wordRef.current) {
+      wordRef.current.material.color.set(hovered ? "white" : color);
+    }
   });
   return (
     <Text
@@ -36,13 +39,15 @@ function HoverWord({ str, position, fontSize, color }) {
 }
 
 function Menu() {
-  const { viewport, camera, pointer } = useThree();
+  const { pointer } = useThree();
   const ref = useRef();
   const words = ["Works", "Resume", "Keyboards", "About"];
   const wordSpacing = 0.5; // Adjust as needed
   // const circleRef = useRef();
   useFrame(() => {
-    ref.current.position.set(pointer.x / 5, pointer.y / 5, 1);
+    if (ref.current) {
+      ref.current.position.set(pointer.x / 5, pointer.y / 5, 1);
+    }
     // circleRef.current.position.set(pointer.x / 5, pointer.y / 5 + 1.8, 1.1);
   });
   return (
