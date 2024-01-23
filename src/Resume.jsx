@@ -1,12 +1,13 @@
-import * as THREE from "three";
 import { useEffect, useState, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import "./App.css";
+import { useSpring, a } from "@react-spring/three";
 
-function Resume() {
+function Resume({ setActive, setComponent }) {
   const { pointer } = useThree();
   const ref = useRef();
+  const { scale } = useSpring({ scale: 1, from: { scale: 0 } });
 
   useFrame(() => {
     if (ref.current) {
@@ -16,10 +17,10 @@ function Resume() {
 
   return (
     <>
-      <mesh ref={ref}>
-        <planeGeometry args={[3, 6]} />
+      <a.mesh scale={scale.to((s) => [s, s, s])} ref={ref}>
+        <planeGeometry args={[6.4, 8.8]} />
         <meshBasicMaterial transparent opacity={0.85} color="#625d52" />
-      </mesh>
+      </a.mesh>
     </>
   );
 }

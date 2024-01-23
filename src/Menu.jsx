@@ -36,10 +36,19 @@ function HoverWord({ str, position, fontSize, color, onClick }) {
   );
 }
 
-function Menu() {
+function Menu({ setActive, setComponent }) {
   const { viewport, camera, pointer } = useThree();
-  const [active, setActive] = useState(true);
-  const { scale } = useSpring({ scale: active ? 1 : 0 });
+  const [active, setActiveState] = useState(true);
+  const [selected, setSelected] = useState(null);
+  const { scale } = useSpring({
+    scale: active ? 1 : 0,
+    onRest: () => {
+      if (!active) {
+        setActive(false);
+        setComponent(selected);
+      }
+    },
+  });
   const ref = useRef();
   const words = ["Works", "Resume", "Keyboards", "About"];
   const wordSpacing = 0.5; // Adjust as needed
@@ -48,8 +57,9 @@ function Menu() {
     ref.current.position.set(pointer.x / 5, pointer.y / 5, 1);
     // circleRef.current.position.set(pointer.x / 5, pointer.y / 5 + 1.8, 1.1);
   });
-  const handleWordClick = () => {
-    setActive(!active);
+  const handleWordClick = (word) => {
+    setSelected(word);
+    setActiveState(!active);
   };
   return (
     <>
@@ -69,7 +79,7 @@ function Menu() {
             position={[-1.3, -1.0 + index * wordSpacing, 0.1]} // Adjust the position based on the index
             fontSize={0.25}
             color="#e1e1e1"
-            onClick={handleWordClick}
+            onClick={() => handleWordClick(word)}
           />
         ))}
       </animated.mesh>
