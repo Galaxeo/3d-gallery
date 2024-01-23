@@ -3,10 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Image, Text } from "@react-three/drei";
 import { useSpring, animated } from "@react-spring/three";
-import Resume from "./Resume";
+import { useLocation } from "wouter";
 
 import "./App.css";
-import feather from "./assets/feather-background.png";
 function HoverWord({ str, position, fontSize, color, onClick }) {
   const [hovered, setHovered] = useState(false);
   const over = (e) => (e.stopPropagation(), setHovered(true));
@@ -37,15 +36,18 @@ function HoverWord({ str, position, fontSize, color, onClick }) {
 }
 
 function Menu({ setActive, setComponent }) {
-  const { viewport, camera, pointer } = useThree();
+  const { pointer } = useThree();
   const [active, setActiveState] = useState(true);
   const [selected, setSelected] = useState(null);
+  const [, navigate] = useLocation();
   const { scale } = useSpring({
-    scale: active ? 1 : 0,
+    from: { scale: 0 },
+    to: { scale: active ? 1 : 0 },
     onRest: () => {
       if (!active) {
-        setActive(false);
-        setComponent(selected);
+        // setActive(false);
+        // setComponent(selected);
+        navigate(`/${selected.toLowerCase()}`);
       }
     },
   });

@@ -26,7 +26,10 @@ function Dot({ x, y, z }) {
     </mesh>
   );
 }
-export function Background({ count = 1024 }) {
+export function getPointerPos(e) {
+  return { x: e.clientX, y: e.clientY };
+}
+function Background({ count = 1024 }) {
   const { camera } = useThree();
   useEffect(() => {
     camera.position.z = 10;
