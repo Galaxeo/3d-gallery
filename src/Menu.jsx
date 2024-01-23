@@ -2,9 +2,12 @@ import * as THREE from "three";
 import { useEffect, useState, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Image, Text } from "@react-three/drei";
+import { useSpring, animated } from "@react-spring/three";
+import Resume from "./Resume";
+
 import "./App.css";
 import feather from "./assets/feather-background.png";
-function HoverWord({ str, position, fontSize, color }) {
+function HoverWord({ str, position, fontSize, color, onClick }) {
   const [hovered, setHovered] = useState(false);
   const over = (e) => (e.stopPropagation(), setHovered(true));
   const out = () => setHovered(false);
@@ -26,9 +29,7 @@ function HoverWord({ str, position, fontSize, color }) {
       color={color}
       font="/RodinM.woff"
       fontSize={fontSize}
-      onClick={() => {
-        console.log("here");
-      }}
+      onClick={onClick}
     >
       {str}
     </Text>
@@ -37,6 +38,8 @@ function HoverWord({ str, position, fontSize, color }) {
 
 function Menu() {
   const { viewport, camera, pointer } = useThree();
+  const [active, setActive] = useState(true);
+  const { scale } = useSpring({ scale: active ? 1 : 0 });
   const ref = useRef();
   const words = ["Works", "Resume", "Keyboards", "About"];
   const wordSpacing = 0.5; // Adjust as needed
@@ -45,9 +48,12 @@ function Menu() {
     ref.current.position.set(pointer.x / 5, pointer.y / 5, 1);
     // circleRef.current.position.set(pointer.x / 5, pointer.y / 5 + 1.8, 1.1);
   });
+  const handleWordClick = () => {
+    setActive(!active);
+  };
   return (
     <>
-      <mesh ref={ref}>
+      <animated.mesh scale={scale.to((s) => [s, s, s])} ref={ref}>
         <planeGeometry args={[3, 6]} />
         <meshBasicMaterial transparent opacity={0.85} color="#625d52" />
         <HoverWord
@@ -63,9 +69,10 @@ function Menu() {
             position={[-1.3, -1.0 + index * wordSpacing, 0.1]} // Adjust the position based on the index
             fontSize={0.25}
             color="#e1e1e1"
+            onClick={handleWordClick}
           />
         ))}
-      </mesh>
+      </animated.mesh>
       {/* <mesh ref={circleRef}>
         <circleGeometry args={[0.8, 64]} />
         <meshBasicMaterial
