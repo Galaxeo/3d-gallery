@@ -47,7 +47,7 @@ function Background({ count = 1024 }) {
   }
   return (
     <>
-      <color attach="background" args={["#d4d7db"]} />
+      <color attach="background" args={["#c0c0c0"]} />
       {particles}
       <EffectComposer>
         <DepthOfField

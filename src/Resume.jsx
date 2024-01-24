@@ -39,7 +39,7 @@ function Resume() {
         <meshBasicMaterial
           transparent
           opacity={0.95}
-          map={new THREE.TextureLoader().load("../src/assets/resume-1.png")}
+          map={new THREE.TextureLoader().load("../src/assets/resume-2.png")}
         />
         {/* <Html center wrapperClass="fade-in" position={[0, 3.7, 0.1]}>
           <div className="resumeCont">
