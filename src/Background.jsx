@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
 import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
 // Want to create a floating particle background that reacts to mouse movement
@@ -25,9 +25,6 @@ function Dot({ x, y, z }) {
       <meshBasicMaterial color="grey" />
     </mesh>
   );
-}
-export function getPointerPos(e) {
-  return { x: e.clientX, y: e.clientY };
 }
 function Background({ count = 1024 }) {
   const { camera } = useThree();

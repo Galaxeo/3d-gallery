@@ -2,13 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
 @font-face {
   font-family: 'RodinL';
-  src: url('../public/RodinL.woff') format('woff');
+  src: url('/RodinL.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'RodinM';
-  src: url('../public/RodinM.woff') format('woff');
+  src: url('/RodinM.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -78,7 +78,8 @@ html, body, #root {
 }
 .largeText {
   font-family: 'RodinM', 'Fira Sans', sans-serif;
-  font-size: '2rem'
+  font-size: '2rem';
+  align-self: center;
 }
 .backArrow {
   cursor: pointer;
@@ -93,7 +94,7 @@ html, body, #root {
 
 .fade-in {
   opacity: 0;
-  animation: fadeIn 2s forwards;
+  animation: fadeIn 1.5s forwards;
 }
 @keyframes fadeIn {
   to {

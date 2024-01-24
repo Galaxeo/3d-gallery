@@ -4,7 +4,7 @@ import Resume from "./Resume";
 
 import "./App.css";
 import Menu from "./Menu";
-function Screen({}) {
+function Screen() {
   // By default, show the menu
   const [active, setActive] = useState(true);
   // When an option on the menu is clicked, obtain the string word to figure out which component to render

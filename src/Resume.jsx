@@ -1,15 +1,18 @@
+import * as THREE from "three";
 import { useEffect, useState, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import { Html, Image } from "@react-three/drei";
 import "./App.css";
-import { useSpring, a } from "@react-spring/three";
+import { useSpring, animated } from "@react-spring/three";
+import { animated as a } from "react-spring";
 import BackArrow from "./BackArrow";
 import { navigate } from "wouter/use-location";
 
 function Resume() {
   const ref = useRef();
+  const { pointer } = useThree();
   const [active, setActiveState] = useState(true);
-  const { fontOpacity } = useSpring({
+  const { opacity } = useSpring({
     opacity: active ? 1 : 0,
   });
   const { scale } = useSpring({
@@ -24,33 +27,41 @@ function Resume() {
 
   useFrame(() => {
     if (ref.current) {
-      // ref.current.position.set(pointer.x / 5, pointer.y / 5, 1);
-      ref.current.position.set(0, 0, 1);
+      ref.current.position.set(pointer.x / 5, pointer.y / 5, 1);
+      // ref.current.position.set(0, 0, 1);
     }
   });
 
-  const handleBack = () => {
-    setActiveState(!active);
-  };
-
   return (
     <>
-      <a.mesh scale={scale.to((s) => [s, s, s])} ref={ref}>
+      <animated.mesh scale={scale.to((s) => [s, s, s])} ref={ref}>
         <planeGeometry args={[6.4, 8.8]} />
-        <meshBasicMaterial transparent opacity={0.85} color="#625d52" />
-        <Html center wrapperClass="fade-in" position={[0, 3.7, 0.1]}>
-          <a.div style={{ fontOpacity }} className="resumeCont">
-            <p
+        <meshBasicMaterial
+          transparent
+          opacity={0.95}
+          map={new THREE.TextureLoader().load("../src/assets/resume-1.png")}
+        />
+        {/* <Html center wrapperClass="fade-in" position={[0, 3.7, 0.1]}>
+          <div className="resumeCont">
+            <a.p
               className="largeFont"
-              style={{ fontSize: "3rem", paddingLeft: "3" }}
+              style={{
+                fontSize: "3rem",
+                opacity: opacity.to((o) => o),
+                transform: scale.to((s) => `scale(${s})`),
+              }}
             >
               Resume
-            </p>
-            <p className="largeFont">Education</p>
-          </a.div>
-        </Html>
-        <BackArrow handleClick={handleBack} />
-      </a.mesh>
+            </a.p>
+            <a.p
+              className="largeFont"
+              style={{ opacity: opacity.to((o) => o) }}
+            >
+              Education
+            </a.p>
+          </div>
+        </Html> */}
+      </animated.mesh>
     </>
   );
 }

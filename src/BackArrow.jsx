@@ -2,14 +2,22 @@ import React from "react";
 import { Html } from "@react-three/drei";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useLocation } from "wouter";
-function BackArrow({ handleClick }) {
-  const [, navigate] = useLocation();
-
+import { animated as a } from "react-spring";
+function BackArrow({ handleClick, style }) {
   // NOTE: Animate the opacity here as well
   return (
-    <Html position={[0, -3, 0]} className="backArrow">
-      <FontAwesomeIcon size="2x" icon={faArrowLeft} onClick={handleClick} />
+    <Html
+      style={{ position: "absolute", transform: "translateY(-500px)" }}
+      className="backArrow"
+    >
+      <a.div style={style}>
+        <FontAwesomeIcon
+          size="2x"
+          icon={faArrowLeft}
+          onClick={handleClick}
+          style={style}
+        />
+      </a.div>
     </Html>
   );
 }
