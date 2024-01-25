@@ -18,11 +18,13 @@
     "@react-three/fiber": "^8.15.14",
     "@react-three/postprocessing": "^2.15.12",
     "@types/three": "^0.160.0",
+    "maath": "^0.10.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.3",
     "react-spring": "^9.7.3",
     "three": "^0.160.1",
+    "uuid-by-string": "^4.0.0",
     "wouter": "^2.12.1"
   },
   "devDependencies": {
