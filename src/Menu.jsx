@@ -21,21 +21,24 @@ const images = [
     position: [-1.5, 0, 3],
     rotation: [0, Math.PI / 6, 0],
     url: "../src/assets/code.png",
+    title: "programming",
   },
   // Middle
   {
     position: [0, 0, 2.5],
     rotation: [0, 0, 0],
     url: "../src/assets/skyline.jpg",
+    title: "about",
   },
   // Right
   {
     position: [1.5, 0, 3],
     rotation: [0, -Math.PI / 6, 0],
     url: "../src/assets/owlabSpring.jpg",
+    title: "keyboards",
   },
 ];
-function Frames({ images }) {
+function Frames({ images, setHoveredTitle }) {
   const ref = useRef();
   const clicked = useRef();
   const [, params] = useRoute("/item/:id");
@@ -45,26 +48,34 @@ function Frames({ images }) {
       ref={ref}
       onClick={(e) => (
         e.stopPropagation(),
-        setLocation(
-          clicked.current === e.object ? "/" : "/item/" + e.object.name
-        )
+        setLocation(clicked.current === e.object ? "/" : e.object.title)
       )}
       onPointerMissed={() => setLocation("/")}
     >
-      {images.map(
-        (props) => <Frame key={props.url} {...props} /> /* prettier-ignore */
-      )}
+      {images.map((props) => (
+        <Frame
+          key={props.url}
+          title={props.title}
+          setHoveredTitle={setHoveredTitle}
+          {...props}
+        />
+      ))}
     </group>
   );
 }
 
-function Frame({ url, c = new THREE.Color(), ...props }) {
+function Frame({
+  url,
+  title,
+  c = new THREE.Color(),
+  setHoveredTitle,
+  ...props
+}) {
   const image = useRef();
   const frame = useRef();
-  const [, params] = useRoute("/item/:id");
+  const [, params] = useRoute(":id");
   const [hovered, hover] = useState(false);
   const name = getUuid(url);
-  const title = url.split("/").pop().split(".")[0];
   const isActive = params?.id === name;
   useCursor(hovered);
   useFrame((state, dt) => {
@@ -89,8 +100,16 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
     <group {...props}>
       <mesh
         name={name}
-        onPointerOver={(e) => (e.stopPropagation(), hover(true))}
-        onPointerOut={() => hover(false)}
+        title={title}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          hover(true);
+          setHoveredTitle(title);
+        }}
+        onPointerOut={() => {
+          hover(false);
+          setHoveredTitle(null);
+        }}
         scale={[1, GOLDENRATIO, 0.05]}
         position={[0, GOLDENRATIO / 2, 0]}
       >
@@ -117,40 +136,35 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
           url={url}
         />
       </mesh>
-      <Text
-        maxWidth={0.1}
-        anchorX="left"
-        anchorY="top"
-        position={[0.55, GOLDENRATIO, 0]}
-        fontSize={0.025}
-      >
-        {title}
-      </Text>
     </group>
   );
 }
 
 function Menu() {
+  const [hoveredTitle, setHoveredTitle] = useState();
   return (
     <>
-      <Canvas dpr={[1, 1.5]} camera={{ fov: 70, position: [0, 2, 15] }}>
+      <div className="title">
+        <p>{hoveredTitle || "cheok.works"}</p>
+      </div>
+      <Canvas dpr={[1, 1.5]} camera={{ fov: 70, position: [0, 0.5, 6] }}>
         <color attach="background" args={["#191920"]} />
         <fog attach="fog" args={["#191920", 0, 15]} />
         <group position={[0, -0.5, 0]}>
-          <Frames images={images} />
+          <Frames images={images} setHoveredTitle={setHoveredTitle} />
           <mesh rotation={[-Math.PI / 2, 0, 0]}>
             <planeGeometry args={[50, 50]} />
             <MeshReflectorMaterial
               blur={[300, 100]}
               resolution={2048}
               mixBlur={1}
-              mixStrength={80}
+              mixStrength={50}
               roughness={1}
               depthScale={1.2}
               minDepthThreshold={0.4}
               maxDepthThreshold={1.4}
               color="#050505"
-              metalness={0.5}
+              metalness={0.4}
             />
           </mesh>
         </group>
