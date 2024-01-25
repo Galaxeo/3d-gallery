@@ -18,7 +18,7 @@ const GOLDENRATIO = 1.61803398875;
 const images = [
   // Left
   {
-    position: [-1.5, 0, 3],
+    position: [-1.5, 0, 2.8],
     rotation: [0, Math.PI / 6, 0],
     url: "../src/assets/code.png",
     title: "programming",
@@ -32,7 +32,7 @@ const images = [
   },
   // Right
   {
-    position: [1.5, 0, 3],
+    position: [1.5, 0, 2.8],
     rotation: [0, -Math.PI / 6, 0],
     url: "../src/assets/owlabSpring.jpg",
     title: "keyboards",
