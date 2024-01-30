@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   Environment,
+  MeshPortalMaterial,
 } from "@react-three/drei";
 import { useRoute, useLocation } from "wouter";
 import { easing } from "maath";
