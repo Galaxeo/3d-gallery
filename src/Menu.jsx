@@ -12,6 +12,7 @@ import {
 } from "@react-three/drei";
 import { useRoute, useLocation } from "wouter";
 import { easing } from "maath";
+import { useSpring, animated } from "@react-spring/three";
 import getUuid from "uuid-by-string";
 
 const GOLDENRATIO = 1.61803398875;

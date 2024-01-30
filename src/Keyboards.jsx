@@ -84,7 +84,7 @@ const keyboardDescriptions = [
   },
   {
     title: "Wooting 60HE in Mekanisk Fjell",
-    switches: "Geon Raptors/Gateron Lekker Frankenswitch",
+    switches: "Geon Raptor HEs",
     keycaps: "GMK Hallyu",
   },
   {
@@ -111,11 +111,11 @@ export function Scene() {
   const ref = useRef();
   const scroll = useScroll();
   const radius = 2;
-  const [hoveredImage, setHoveredImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   useFrame((state, delta) => {
     ref.current.rotation.y = -scroll.offset * (Math.PI * 2);
     state.events.update();
-    easing.damp3(state.camera.position, [0, 3, 9], 0.3, delta);
+    easing.damp3(state.camera.position, [0, 2, 9], 0.3, delta);
     state.camera.lookAt(0, 0, 0);
     const cameraDirection = new THREE.Vector3();
     state.camera.getWorldDirection(cameraDirection);
@@ -133,10 +133,10 @@ export function Scene() {
       }
     });
 
-    setHoveredImage(imageInFront + 1);
+    setSelectedImage(imageInFront + 1);
   });
-  const hoveredImageUrl =
-    hoveredImage !== null ? imagePaths[hoveredImage - 1] : null;
+  const selectedImageUrl =
+    selectedImage !== null ? imagePaths[selectedImage - 1] : null;
 
   return (
     <>
@@ -149,29 +149,66 @@ export function Scene() {
           return (
             <Billboard
               key={i + 1}
-              position={[x, -1, z]}
-              onPointerOver={() => setHoveredImage(i + 1)}
-              onPointerOut={() => setHoveredImage(null)}
+              position={[x, -1.7, z]}
+              onPointerOver={() => setSelectedImage(i + 1)}
+              onPointerOut={() => setSelectedImage(null)}
             >
-              <Image url={path} />
+              <Image url={path} transparent opacity={0.8} scale={[1.5, 1]} />
             </Billboard>
           );
         })}
-        {hoveredImageUrl && ( // Add this block
+        {selectedImageUrl && ( // Add this block
           <Billboard position={[0, radius, 0]}>
             <Image
               scale={[7.12, 4]}
-              url={hoveredImageUrl}
+              url={selectedImageUrl}
               transparent
-              opacity={0.85}
+              opacity={0.95}
             />
             <Text
-              font={"./RodinL.woff"}
-              position={[-3, 2.5, 0]}
+              font={"./RodinM.woff"}
+              position={[-3.6, 2.2, 0]}
               anchorX={"left"}
               color={"white"}
+              fontSize={0.4}
             >
-              kb inform
+              {keyboardDescriptions[selectedImage - 1].title}
+            </Text>
+            <Text
+              font={"./RodinM.woff"}
+              position={[-3.58, -2.2, 0]}
+              anchorX={"left"}
+              color={"white"}
+              fontSize={0.2}
+            >
+              {keyboardDescriptions[selectedImage - 1].keycaps}
+            </Text>
+            {/* <Text
+              font={"./RodinM.woff"}
+              position={[-3.55, -2.4, 0]}
+              anchorX={"left"}
+              color={"white"}
+              fontSize={0.1}
+            >
+              Keycaps
+            </Text> */}
+            {/* <Text
+              font={"./RodinM.woff"}
+              position={[3.6, 2.2, 0]}
+              anchorX={"right"}
+              color={"white"}
+              fontSize={0.3}
+            >
+              ?
+            </Text> */}
+            <Text
+              font={"./RodinM.woff"}
+              position={[3.6, -2.2, 0]}
+              anchorX={"right"}
+              color={"white"}
+              fontSize={0.2}
+            >
+              {keyboardDescriptions[selectedImage - 1].switches}
             </Text>
           </Billboard>
         )}
