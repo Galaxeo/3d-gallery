@@ -1,7 +1,7 @@
 // Heavily inspired by the Image gallery from pmndrs examples
 import "./App.css";
 import * as THREE from "three";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   useCursor,
@@ -13,8 +13,9 @@ import {
 } from "@react-three/drei";
 import { Switch, Route, useRoute, useLocation } from "wouter";
 import { easing } from "maath";
-import getUuid from "uuid-by-string";
+import { useSpring, animated } from "@react-spring/three";
 import { Keyboards } from "./Keyboards";
+import getUuid from "uuid-by-string";
 
 const GOLDENRATIO = 1.61803398875;
 
@@ -46,9 +47,15 @@ function Frames({ images, setHoveredTitle }) {
   const clicked = useRef();
   const [, params] = useRoute("/item/:id");
   const [, setLocation] = useLocation();
+  const dogs = useSpring({
+    scale: [1, 1, 1],
+    from: { scale: [0, 0, 0] },
+    config: { mass: 0.7, tension: 150, friction: 20 },
+  });
   return (
-    <group
+    <animated.group
       ref={ref}
+      scale={dogs.scale}
       onClick={(e) => (
         e.stopPropagation(),
         setLocation(clicked.current === e.object ? "/" : e.object.title)
@@ -63,7 +70,7 @@ function Frames({ images, setHoveredTitle }) {
           {...props}
         />
       ))}
-    </group>
+    </animated.group>
   );
 }
 
@@ -171,32 +178,37 @@ function Menu() {
 
 function App() {
   const [location] = useLocation();
-  const meshYPosition = location === "/keyboards" ? -3 : -0.5;
+  const meshYPosition = location === "/keyboards" ? -0.5 : -0.5;
   return (
     <>
       <Canvas dpr={[1, 1.5]} camera={{ fov: 70, position: [0, 0.5, 6] }}>
-        <color attach="background" args={["#191920"]} />
-        <fog attach="fog" args={["#191920", 0, 15]} />
-        <Switch>
-          <Route path="/" component={Menu} />
-          <Route path="/Keyboards" component={Keyboards} />
-        </Switch>
-        <mesh position={[0, meshYPosition, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[50, 50]} />
-          <MeshReflectorMaterial
-            blur={[300, 100]}
-            resolution={2048}
-            mixBlur={1}
-            mixStrength={50}
-            roughness={1}
-            depthScale={1.2}
-            minDepthThreshold={0.4}
-            maxDepthThreshold={1.4}
-            color="#050505"
-            metalness={0.4}
-          />
-        </mesh>
-        <Environment preset="city" />
+        <Suspense>
+          <color attach="background" args={["#191920"]} />
+          <fog attach="fog" args={["#191920", 0, 15]} />
+          <Switch fallback={<div>LOADING</div>}>
+            <Route path="/" component={Menu} />
+            <Route path="/Keyboards" component={Keyboards} />
+          </Switch>
+          <mesh
+            position={[0, meshYPosition, 0]}
+            rotation={[-Math.PI / 2, 0, 0]}
+          >
+            <planeGeometry args={[50, 50]} />
+            <MeshReflectorMaterial
+              blur={[300, 100]}
+              resolution={2048}
+              mixBlur={1}
+              mixStrength={50}
+              roughness={1}
+              depthScale={1.2}
+              minDepthThreshold={0.4}
+              maxDepthThreshold={1.4}
+              color="#050505"
+              metalness={0.4}
+            />
+          </mesh>
+          <Environment preset="city" />
+        </Suspense>
       </Canvas>
     </>
   );

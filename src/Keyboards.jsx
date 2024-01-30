@@ -11,6 +11,7 @@ import {
 } from "@react-three/drei";
 import { easing } from "maath";
 import { useSpring, animated } from "@react-spring/three";
+import { useLocation } from "wouter";
 const keyboardDescriptions = [
   {
     title: "GMMK Pro",
@@ -100,7 +101,7 @@ const keyboardDescriptions = [
 ];
 export function Scene() {
   const props = useSpring({
-    scale: [1.2, 1.2, 1.2],
+    scale: [0.4, 0.4, 0.4],
     from: { scale: [0, 0, 0] },
     config: { mass: 0.7, tension: 70, friction: 20 },
   });
@@ -112,10 +113,12 @@ export function Scene() {
   const scroll = useScroll();
   const radius = 2;
   const [selectedImage, setSelectedImage] = useState(null);
+  const [hoveredBack, setHoveredBack] = useState(false);
+  const [, setLocation] = useLocation();
   useFrame((state, delta) => {
     ref.current.rotation.y = -scroll.offset * (Math.PI * 2);
     state.events.update();
-    easing.damp3(state.camera.position, [0, 2, 9], 0.3, delta);
+    easing.damp3(state.camera.position, [0, 0.5, 9], 0.3, delta);
     state.camera.lookAt(0, 0, 0);
     const cameraDirection = new THREE.Vector3();
     state.camera.getWorldDirection(cameraDirection);
@@ -140,7 +143,7 @@ export function Scene() {
 
   return (
     <>
-      <animated.group scale={props.scale} ref={ref}>
+      <animated.group scale={props.scale} position-z={6} ref={ref}>
         {imagePaths.map((path, i) => {
           const theta = (i / imagePaths.length) * 2 * Math.PI;
           const x = radius * Math.cos(theta);
@@ -149,7 +152,7 @@ export function Scene() {
           return (
             <Billboard
               key={i + 1}
-              position={[x, -1.7, z]}
+              position={[x, -0.2, z]}
               onPointerOver={() => setSelectedImage(i + 1)}
               onPointerOut={() => setSelectedImage(null)}
             >
@@ -158,7 +161,7 @@ export function Scene() {
           );
         })}
         {selectedImageUrl && ( // Add this block
-          <Billboard position={[0, radius, 0]}>
+          <Billboard position={[0, radius + 1, 0]}>
             <Image
               scale={[7.12, 4]}
               url={selectedImageUrl}
@@ -210,6 +213,26 @@ export function Scene() {
             >
               {keyboardDescriptions[selectedImage - 1].switches}
             </Text>
+            <Text
+              onPointerOver={() => {
+                setHoveredBack(true);
+                document.body.style.cursor = "pointer";
+              }}
+              onPointerOut={() => {
+                setHoveredBack(false);
+                document.body.style.cursor = "default";
+              }}
+              onClick={() => {
+                setLocation("/");
+              }}
+              font={hoveredBack ? "./RodinM.woff" : "./RodinL.woff"}
+              position={[0, -2.2, 0]}
+              anchorX={"center"}
+              color={"white"}
+              fontSize={0.2}
+            >
+              Back
+            </Text>
           </Billboard>
         )}
       </animated.group>
@@ -219,8 +242,10 @@ export function Scene() {
 
 export function Keyboards() {
   return (
-    <ScrollControls infinite>
-      <Scene />
-    </ScrollControls>
+    <>
+      <ScrollControls infinite>
+        <Scene />
+      </ScrollControls>
+    </>
   );
 }
