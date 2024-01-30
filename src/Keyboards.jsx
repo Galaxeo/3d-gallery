@@ -7,9 +7,97 @@ import {
   Billboard,
   ScrollControls,
   useScroll,
+  Html,
 } from "@react-three/drei";
 import { easing } from "maath";
 import { useSpring, animated } from "@react-spring/three";
+const keyboardDescriptions = [
+  {
+    title: "GMMK Pro",
+    switches: "Banana Splits",
+    keycaps: "EnjoyPBT WoB",
+  },
+  {
+    title: "Mode Eighty First Edition",
+    switches: "Original Aspirations",
+    keycaps: "GMK Honor Dark",
+  },
+  {
+    title: "KBD8X MKII",
+    switches: "Boba U4Ts",
+    keycaps: "EnjoyPBT Sky Dolch",
+  },
+  {
+    title: "Mode SixtyFive",
+    switches: "NovelKeys Creams",
+    keycaps: "EnjoyPBT Blumen",
+  },
+  {
+    title: "Rama M65-B",
+    switches: "Boba U4Ts",
+    keycaps: "GMK Hallyu",
+  },
+  {
+    title: "Tofu 65",
+    switches: "Hako Clears",
+    keycaps: "PG Retro",
+  },
+  {
+    title: "NK65 Entry Edition",
+    switches: "Boba U4Ts",
+    keycaps: "XDA Apollo",
+  },
+  {
+    title: "Rama U80-A SEQ2",
+    switches: "Boba U4Ts",
+    keycaps: "EnjoyPBT Miami Nights",
+  },
+  {
+    title: "Bakeneko 65",
+    switches: "Mauves",
+    keycaps: "NicePBT Sugarplum",
+  },
+  {
+    title: "NK87",
+    switches: "Boba U4 Silents",
+    keycaps: "NovelKeys Cherry Blossom",
+  },
+  {
+    title: "Mode Eighty 2022",
+    switches: "Pewters",
+    keycaps: "XY Kitty Paw",
+  },
+  {
+    title: "Owlab Spring",
+    switches: "Original Aspiration Creamsicles",
+    keycaps: "GMK Alter",
+  },
+  {
+    title: "Monokei x TGR Tomo",
+    switches: "MX Browns",
+    keycaps: "NicePBT Noel",
+  },
+  {
+    title: "Norbauer Heavy Grail",
+    switches: "Topre",
+    keycaps: "Stock HHKB",
+  },
+  {
+    title: "Wooting 60HE in Mekanisk Fjell",
+    switches: "Geon Raptors/Gateron Lekker Frankenswitch",
+    keycaps: "GMK Hallyu",
+  },
+  {
+    title: "Mode Sonnet",
+    switches: "Boba U4Ts",
+    keycaps: "NovelKeys Cherry Taro",
+  },
+  {
+    title: "Mode Envoy",
+    switches: "NK Dreams",
+    keycaps: "MW Heresy",
+  },
+];
 export function Scene() {
   const props = useSpring({
     scale: [1.2, 1.2, 1.2],
@@ -79,8 +167,9 @@ export function Scene() {
             />
             <Text
               font={"./RodinL.woff"}
-              position={[-4, 2.8, 0]}
+              position={[-3, 2.5, 0]}
               anchorX={"left"}
+              color={"white"}
             >
               kb inform
             </Text>

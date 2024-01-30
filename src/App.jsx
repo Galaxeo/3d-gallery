@@ -9,7 +9,7 @@ import {
   Image,
   Text,
   Environment,
-  MeshPortalMaterial,
+  Html,
 } from "@react-three/drei";
 import { Switch, Route, useRoute, useLocation } from "wouter";
 import { easing } from "maath";
@@ -157,9 +157,11 @@ function Menu() {
   }, [location, camera]);
   return (
     <>
-      <Text font={"./RodinL.woff"} position={[0, 2.5, 0]}>
-        {hoveredTitle || "cheok.works"}
-      </Text>
+      <Html position={[0, 3, 0]}>
+        <div className="title">
+          <p>{hoveredTitle || "cheok.works"}</p>
+        </div>
+      </Html>
       <group position={[0, -0.5, 0]}>
         <Frames images={images} setHoveredTitle={setHoveredTitle} />
       </group>

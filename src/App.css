@@ -93,7 +93,17 @@ html, body, #root {
 }
 .title p {
   transition: opacity 0.5s ease-in-out;
-
+}
+.keybInfo {
+  top: 10%;
+  left: 50%;
+  z-index: 3;
+  font-size: 3rem;
+  position: fixed;
+  color: white;
+}
+.keybInfo * {
+  position: fixed;
 }
 
 @keyframes fadeInOut {
