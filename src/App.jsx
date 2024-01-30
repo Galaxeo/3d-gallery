@@ -1,12 +1,14 @@
 import "./App.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Route } from "wouter";
 import { Canvas } from "@react-three/fiber";
 import Menu from "./Menu";
+import Keyboards from "./Keyboards";
 
 function App() {
   return (
     <>
-      <Menu></Menu>
+      <Route path="/" component={Menu} />
+      <Route path="/Keyboards" component={Keyboards} />
     </>
   );
 }
