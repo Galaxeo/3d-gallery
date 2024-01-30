@@ -36,7 +36,7 @@ const images = [
   {
     position: [1.5, 0, 2.8],
     rotation: [0, -Math.PI / 6, 0],
-    url: "../src/assets/owlabSpring.jpg",
+    url: "../src/assets/artisan.jpg",
     title: "keyboards",
   },
 ];
