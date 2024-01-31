@@ -16,6 +16,9 @@ import { easing } from "maath";
 import { useSpring, animated } from "@react-spring/three";
 import { Keyboards } from "./Keyboards";
 import getUuid from "uuid-by-string";
+import { helix } from "ldrs";
+
+helix.register();
 
 const GOLDENRATIO = 1.61803398875;
 
@@ -182,10 +185,16 @@ function App() {
   return (
     <>
       <Canvas dpr={[1, 1.5]} camera={{ fov: 70, position: [0, 0.5, 6] }}>
-        <Suspense>
+        <Suspense
+          fallback={
+            <Html>
+              <l-helix size="45" speed="2.5" color="#191920"></l-helix>
+            </Html>
+          }
+        >
           <color attach="background" args={["#191920"]} />
           <fog attach="fog" args={["#191920", 0, 15]} />
-          <Switch fallback={<div>LOADING</div>}>
+          <Switch>
             <Route path="/" component={Menu} />
             <Route path="/Keyboards" component={Keyboards} />
           </Switch>

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   Image,
@@ -12,70 +12,74 @@ import {
 import { easing } from "maath";
 import { useSpring, animated } from "@react-spring/three";
 import { useLocation } from "wouter";
+import { helix } from "ldrs";
+
+helix.register();
+
 const keyboardDescriptions = [
   {
     title: "GMMK Pro",
-    switches: "Banana Splits",
+    switches: "Banana Split",
     keycaps: "EnjoyPBT WoB",
   },
   {
     title: "Mode Eighty First Edition",
-    switches: "Original Aspirations",
+    switches: "Original Aspiration",
     keycaps: "GMK Honor Dark",
   },
   {
     title: "KBD8X MKII",
-    switches: "Boba U4Ts",
+    switches: "Boba U4T",
     keycaps: "EnjoyPBT Sky Dolch",
   },
   {
     title: "Mode SixtyFive",
-    switches: "NovelKeys Creams",
+    switches: "NovelKeys Cream",
     keycaps: "EnjoyPBT Blumen",
   },
   {
     title: "Rama M65-B",
-    switches: "Boba U4Ts",
+    switches: "Boba U4T",
     keycaps: "GMK Hallyu",
   },
   {
     title: "Tofu 65",
-    switches: "Hako Clears",
+    switches: "Hako Clear",
     keycaps: "PG Retro",
   },
   {
     title: "NK65 Entry Edition",
-    switches: "Boba U4Ts",
+    switches: "Boba U4T",
     keycaps: "XDA Apollo",
   },
   {
     title: "Rama U80-A SEQ2",
-    switches: "Boba U4Ts",
+    switches: "Boba U4T",
     keycaps: "EnjoyPBT Miami Nights",
   },
   {
     title: "Bakeneko 65",
-    switches: "Mauves",
+    switches: "Mauve",
     keycaps: "NicePBT Sugarplum",
   },
   {
     title: "NK87",
-    switches: "Boba U4 Silents",
+    switches: "Boba U4 Silent",
     keycaps: "NovelKeys Cherry Blossom",
   },
   {
     title: "Mode Eighty 2022",
-    switches: "Pewters",
+    switches: "Pewter",
     keycaps: "XY Kitty Paw",
   },
   {
     title: "Owlab Spring",
-    switches: "Original Aspiration Creamsicles",
+    switches: "Original Aspiration Creamsicle",
     keycaps: "GMK Alter",
   },
   {
     title: "Monokei x TGR Tomo",
-    switches: "MX Browns",
+    switches: "MX Brown",
     keycaps: "NicePBT Noel",
   },
   {
@@ -85,17 +89,17 @@ const keyboardDescriptions = [
   },
   {
     title: "Wooting 60HE in Mekanisk Fjell",
-    switches: "Geon Raptor HEs",
+    switches: "Geon Raptor HE",
     keycaps: "GMK Hallyu",
   },
   {
     title: "Mode Sonnet",
-    switches: "Boba U4Ts",
+    switches: "Boba U4T",
     keycaps: "NovelKeys Cherry Taro",
   },
   {
     title: "Mode Envoy",
-    switches: "NK Dreams",
+    switches: "NK Dream",
     keycaps: "MW Heresy",
   },
 ];
@@ -186,7 +190,7 @@ export function Scene() {
             >
               {keyboardDescriptions[selectedImage - 1].keycaps}
             </Text>
-            {/* <Text
+            <Text
               font={"./RodinM.woff"}
               position={[-3.55, -2.4, 0]}
               anchorX={"left"}
@@ -194,7 +198,16 @@ export function Scene() {
               fontSize={0.1}
             >
               Keycaps
-            </Text> */}
+            </Text>
+            <Text
+              font={"./RodinM.woff"}
+              position={[3.55, -2.4, 0]}
+              anchorX={"right"}
+              color={"white"}
+              fontSize={0.1}
+            >
+              Switches
+            </Text>
             {/* <Text
               font={"./RodinM.woff"}
               position={[3.6, 2.2, 0]}
@@ -243,9 +256,17 @@ export function Scene() {
 export function Keyboards() {
   return (
     <>
-      <ScrollControls infinite>
-        <Scene />
-      </ScrollControls>
+      <Suspense
+        fallback={
+          <Html>
+            <l-helix size="45" speed="2.5" color="white"></l-helix>
+          </Html>
+        }
+      >
+        <ScrollControls infinite>
+          <Scene />
+        </ScrollControls>
+      </Suspense>
     </>
   );
 }
