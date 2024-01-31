@@ -14,10 +14,11 @@ import {
 import { Switch, Route, useRoute, useLocation } from "wouter";
 import { easing } from "maath";
 import { useSpring, animated } from "@react-spring/three";
-import { Keyboards } from "./Keyboards";
 import getUuid from "uuid-by-string";
 import { helix } from "ldrs";
 
+import { Keyboards } from "./Keyboards";
+import { Works } from "./Works";
 helix.register();
 
 const GOLDENRATIO = 1.61803398875;
@@ -181,7 +182,6 @@ function Menu() {
 
 function App() {
   const [location] = useLocation();
-  const meshYPosition = location === "/keyboards" ? -0.5 : -0.5;
   return (
     <>
       <Canvas dpr={[1, 1.5]} camera={{ fov: 70, position: [0, 0.5, 6] }}>
@@ -196,12 +196,10 @@ function App() {
           <fog attach="fog" args={["#191920", 0, 15]} />
           <Switch>
             <Route path="/" component={Menu} />
-            <Route path="/Keyboards" component={Keyboards} />
+            <Route path="/keyboards" component={Keyboards} />
+            <Route path="/programming" component={Works} />
           </Switch>
-          <mesh
-            position={[0, meshYPosition, 0]}
-            rotation={[-Math.PI / 2, 0, 0]}
-          >
+          <mesh position={[0, -0.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             <planeGeometry args={[50, 50]} />
             <MeshReflectorMaterial
               blur={[300, 100]}
