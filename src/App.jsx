@@ -19,6 +19,7 @@ import { helix } from "ldrs";
 
 import { Keyboards } from "./Keyboards";
 import { Works } from "./Works";
+import { About } from "./About";
 helix.register();
 
 const GOLDENRATIO = 1.61803398875;
@@ -198,6 +199,7 @@ function App() {
             <Route path="/" component={Menu} />
             <Route path="/keyboards" component={Keyboards} />
             <Route path="/programming" component={Works} />
+            <Route path="/about" component={About} />
           </Switch>
           <mesh position={[0, -0.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             <planeGeometry args={[50, 50]} />

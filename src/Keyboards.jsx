@@ -147,7 +147,12 @@ export function Scene() {
 
   return (
     <>
-      <animated.group scale={props.scale} position-z={6} ref={ref}>
+      <animated.group
+        scale={props.scale}
+        position-y={0.7}
+        position-z={6}
+        ref={ref}
+      >
         {imagePaths.map((path, i) => {
           const theta = (i / imagePaths.length) * 2 * Math.PI;
           const x = radius * Math.cos(theta);
@@ -156,7 +161,7 @@ export function Scene() {
           return (
             <Billboard
               key={i + 1}
-              position={[x, -0.2, z]}
+              position={[x, -2, z]}
               onPointerOver={() => setSelectedImage(i + 1)}
               onPointerOut={() => setSelectedImage(null)}
             >
@@ -165,7 +170,7 @@ export function Scene() {
           );
         })}
         {selectedImageUrl && ( // Add this block
-          <Billboard position={[0, radius + 1, 0]}>
+          <Billboard position={[0, radius - 0.8, 0]}>
             <Image
               scale={[7.12, 4]}
               url={selectedImageUrl}

@@ -13,7 +13,6 @@ import { easing } from "maath";
 import { useSpring, animated } from "@react-spring/three";
 import { useLocation } from "wouter";
 import { helix } from "ldrs";
-import { faUnderline } from "@fortawesome/free-solid-svg-icons";
 
 helix.register();
 
