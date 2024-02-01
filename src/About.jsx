@@ -51,7 +51,7 @@ export function Scene() {
       >
         <Billboard>
           <mesh position={[0, 0.2, 0]}>
-            <boxGeometry args={[8, 5.5, 0.1]} />
+            <planeGeometry args={[8, 5.5]} />
             <meshStandardMaterial color={"grey"} transparent opacity={0.3} />
           </mesh>
           <Text
@@ -78,6 +78,7 @@ export function Scene() {
             url="../src/assets/headshot.jpg"
             scale={1}
             position={[-2.5, 1.5, 0.1]}
+            anchorY={"top"}
           >
             <roundedPlaneGeometry args={[2, 2, 0.5]} />
           </Image>
@@ -85,28 +86,41 @@ export function Scene() {
             font={"./RodinM.woff"}
             position={[-2.5, 0.3, 0.1]}
             color={"white"}
-            fontSize={0.25}
+            fontSize={0.3}
             anchorX={"center"}
           >
             Justin Cheok
           </Text>
           <Text
             font={"./RodinM.woff"}
-            position={[-2.5, 0, 0.1]}
+            position={[-1.25, 2.5, 0.1]}
             color={"white"}
-            maxWidth={2}
-            fontSize={0.125}
-            anchorX={"center"}
+            maxWidth={4}
+            fontSize={0.25}
+            anchorX={"left"}
+            anchorY={"top"}
+            lineHeight={1.5}
+          >
+            About Me
+          </Text>
+          <Text
+            font={"./RodinM.woff"}
+            position={[-1.25, 2.15, 0.1]}
+            color={"white"}
+            maxWidth={4}
+            fontSize={0.15}
+            anchorX={"left"}
             anchorY={"top"}
             lineHeight={1.5}
           >
             Full-stack developer based in the Bay Area, CA. Currently working
             for Reactor8 as a software engineer. Passionate about front-end
-            development/design and data-driven projects.
+            development/design and data-driven projects. Building keyboards and
+            weightlifting on the side.
           </Text>
           <Text
             font={"./RodinM.woff"}
-            position={[-1.2, 2.5, 0.1]}
+            position={[-1.25, 1.1, 0.1]}
             color={"white"}
             fontSize={0.25}
             anchorX={"left"}
@@ -119,8 +133,31 @@ export function Scene() {
               <Image
                 key={index}
                 url={url}
-                scale={0.4}
-                position={[+1 + index * 0.4, 2.25, 0.1]}
+                scale={0.3}
+                position={[0.9 + index * 0.33, 0.85, 0.1]}
+                anchorX={"left"}
+                anchorY={"top"}
+                transparent
+              ></Image>
+            ))}
+          </group>
+          <Text
+            font={"./RodinM.woff"}
+            position={[-1.25, 0.75, 0.1]}
+            color={"white"}
+            fontSize={0.25}
+            anchorX={"left"}
+            anchorY={"top"}
+          >
+            Tools:
+          </Text>
+          <group>
+            {imagePaths2.map((url, index) => (
+              <Image
+                key={index}
+                url={url}
+                scale={0.3}
+                position={[-0.25 + index * 0.33, 0.5, 0.1]}
                 anchorX={"left"}
                 anchorY={"top"}
                 transparent
