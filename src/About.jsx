@@ -22,6 +22,14 @@ export function Scene() {
     from: { scale: [0, 0, 0] },
     config: { mass: 0.7, tension: 70, friction: 20 },
   });
+  const imagePaths1 = Array.from(
+    { length: 5 },
+    (_, i) => `../src/assets/About/${i + 1}.png`
+  );
+  const imagePaths2 = Array.from(
+    { length: 6 },
+    (_, i) => `../src/assets/About/${i + 6}.png`
+  );
   const ref = useRef();
   const [hoveredBack, setHoveredBack] = useState(false);
   const [, setLocation] = useLocation();
@@ -82,6 +90,43 @@ export function Scene() {
           >
             Justin Cheok
           </Text>
+          <Text
+            font={"./RodinM.woff"}
+            position={[-2.5, 0, 0.1]}
+            color={"white"}
+            maxWidth={2}
+            fontSize={0.125}
+            anchorX={"center"}
+            anchorY={"top"}
+            lineHeight={1.5}
+          >
+            Full-stack developer based in the Bay Area, CA. Currently working
+            for Reactor8 as a software engineer. Passionate about front-end
+            development/design and data-driven projects.
+          </Text>
+          <Text
+            font={"./RodinM.woff"}
+            position={[-1.2, 2.5, 0.1]}
+            color={"white"}
+            fontSize={0.25}
+            anchorX={"left"}
+            anchorY={"top"}
+          >
+            Main languages:
+          </Text>
+          <group>
+            {imagePaths1.map((url, index) => (
+              <Image
+                key={index}
+                url={url}
+                scale={0.4}
+                position={[+1 + index * 0.4, 2.25, 0.1]}
+                anchorX={"left"}
+                anchorY={"top"}
+                transparent
+              ></Image>
+            ))}
+          </group>
         </Billboard>
       </animated.group>
     </>

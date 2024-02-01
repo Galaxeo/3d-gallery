@@ -110,3 +110,7 @@ html, body, #root {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
+.languageCont {
+  display: flex;
+  flex-direction: row;
+}

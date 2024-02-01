@@ -247,6 +247,7 @@ export function Scene() {
                 onPointerOver={() => {
                   setHoveredDemo(true);
                   document.body.style.cursor = "pointer";
+                  console.log("true");
                 }}
                 onPointerOut={() => {
                   setHoveredDemo(false);
