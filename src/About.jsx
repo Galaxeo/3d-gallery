@@ -17,6 +17,11 @@ import headshot from "../src/assets/headshot.jpg";
 extend({ RoundedPlaneGeometry: geometry.RoundedPlaneGeometry });
 
 export function Scene() {
+  // leftX - rightX = 1.25
+  const leftY = 0.8;
+  const leftX = -2;
+  const rightY = 1.8;
+  const rightX = -0.75;
   const props = useSpring({
     scale: [0.4, 0.4, 0.4],
     from: { scale: [0, 0, 0] },
@@ -51,7 +56,7 @@ export function Scene() {
       >
         <Billboard>
           <mesh position={[0, 0.2, 0]}>
-            <planeGeometry args={[8, 5.5]} />
+            <planeGeometry args={[7, 4.5]} />
             <meshStandardMaterial color={"grey"} transparent opacity={0.3} />
           </mesh>
           <Text
@@ -67,7 +72,7 @@ export function Scene() {
               setLocation("/");
             }}
             font={hoveredBack ? "./RodinM.woff" : "./RodinL.woff"}
-            position={[-3.55, -2.8, 0]}
+            position={[-3.3, -2.3, 0]}
             anchorX={"left"}
             color={"white"}
             fontSize={0.2}
@@ -77,14 +82,14 @@ export function Scene() {
           <Image
             url="../src/assets/headshot.jpg"
             scale={1}
-            position={[-2.5, 1.5, 0.1]}
+            position={[leftX, leftY, 0.1]}
             anchorY={"top"}
           >
             <roundedPlaneGeometry args={[2, 2, 0.5]} />
           </Image>
           <Text
             font={"./RodinM.woff"}
-            position={[-2.5, 0.3, 0.1]}
+            position={[leftX, leftY - 1.2, 0.1]}
             color={"white"}
             fontSize={0.3}
             anchorX={"center"}
@@ -92,8 +97,35 @@ export function Scene() {
             Justin Cheok
           </Text>
           <Text
+            font={"./RodinM.woff"} // -0.3 to -1.5
+            position={[leftX, leftY - 1.5, 0.1]}
+            color={"white"}
+            fontSize={0.2}
+            anchorX={"center"}
+          >
+            Bay Area, CA
+          </Text>
+          <Text
             font={"./RodinM.woff"}
-            position={[-1.25, 2.5, 0.1]}
+            position={[leftX - 0.75, leftY - 1.75, 0.1]}
+            color={"white"}
+            fontSize={0.1}
+            anchorX={"left"}
+          >
+            Email: hwjustincheok@gmail.com
+          </Text>
+          <Text
+            font={"./RodinM.woff"}
+            position={[leftX - 0.75, leftY - 1.9, 0.1]}
+            color={"white"}
+            fontSize={0.1}
+            anchorX={"left"}
+          >
+            Phone: +1 650-933-6363
+          </Text>
+          <Text
+            font={"./RodinM.woff"}
+            position={[rightX, rightY, 0.1]}
             color={"white"}
             maxWidth={4}
             fontSize={0.25}
@@ -105,7 +137,7 @@ export function Scene() {
           </Text>
           <Text
             font={"./RodinM.woff"}
-            position={[-1.25, 2.15, 0.1]}
+            position={[rightX, rightY - 0.35, 0.1]} // 2.2-1.85=0.35
             color={"white"}
             maxWidth={4}
             fontSize={0.15}
@@ -120,9 +152,9 @@ export function Scene() {
           </Text>
           <Text
             font={"./RodinM.woff"}
-            position={[-1.25, 1.1, 0.1]}
+            position={[rightX, rightY - 1.45, 0.1]} // 2.2-0.8=1.4
             color={"white"}
-            fontSize={0.25}
+            fontSize={0.2}
             anchorX={"left"}
             anchorY={"top"}
           >
@@ -134,7 +166,7 @@ export function Scene() {
                 key={index}
                 url={url}
                 scale={0.3}
-                position={[0.9 + index * 0.33, 0.85, 0.1]}
+                position={[rightX + 1.75 + index * 0.33, rightY - 1.65, 0.1]}
                 anchorX={"left"}
                 anchorY={"top"}
                 transparent
@@ -143,9 +175,9 @@ export function Scene() {
           </group>
           <Text
             font={"./RodinM.woff"}
-            position={[-1.25, 0.75, 0.1]}
+            position={[rightX, rightY - 1.8, 0.1]} // 2.2-0.45 = 1.75
             color={"white"}
-            fontSize={0.25}
+            fontSize={0.2}
             anchorX={"left"}
             anchorY={"top"}
           >
@@ -157,7 +189,7 @@ export function Scene() {
                 key={index}
                 url={url}
                 scale={0.3}
-                position={[-0.25 + index * 0.33, 0.5, 0.1]}
+                position={[rightX + 0.8 + index * 0.33, rightY - 2, 0.1]}
                 anchorX={"left"}
                 anchorY={"top"}
                 transparent
