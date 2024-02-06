@@ -16,7 +16,6 @@ import { easing } from "maath";
 import { useSpring, animated } from "@react-spring/three";
 import getUuid from "uuid-by-string";
 import { helix } from "ldrs";
-
 import { Keyboards } from "./Keyboards";
 import { Works } from "./Works";
 import { About } from "./About";
@@ -29,21 +28,21 @@ const images = [
   {
     position: [-1.5, 0, 2.8],
     rotation: [0, Math.PI / 6, 0],
-    url: "../src/assets/code.png",
+    url: "/assets/code.png",
     title: "programming",
   },
   // Middle
   {
     position: [0, 0, 2.5],
     rotation: [0, 0, 0],
-    url: "../src/assets/skyline.jpg",
+    url: "/assets/skyline.jpg",
     title: "about",
   },
   // Right
   {
     position: [1.5, 0, 2.8],
     rotation: [0, -Math.PI / 6, 0],
-    url: "../src/assets/artisan.jpg",
+    url: "/assets/artisan.jpg",
     title: "keyboards",
   },
 ];

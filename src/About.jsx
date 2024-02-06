@@ -12,7 +12,7 @@ import {
 import { easing, geometry } from "maath";
 import { useSpring, animated } from "@react-spring/three";
 import { useLocation } from "wouter";
-import headshot from "../src/assets/headshot.jpg";
+import headshot from "/assets/headshot.jpg";
 
 extend({ RoundedPlaneGeometry: geometry.RoundedPlaneGeometry });
 
@@ -29,11 +29,11 @@ export function Scene() {
   });
   const imagePaths1 = Array.from(
     { length: 5 },
-    (_, i) => `../src/assets/About/${i + 1}.png`
+    (_, i) => `/assets/About/${i + 1}.png`
   );
   const imagePaths2 = Array.from(
     { length: 6 },
-    (_, i) => `../src/assets/About/${i + 6}.png`
+    (_, i) => `/assets/About/${i + 6}.png`
   );
   const ref = useRef();
   const [hoveredBack, setHoveredBack] = useState(false);
@@ -80,7 +80,7 @@ export function Scene() {
             Back
           </Text>
           <Image
-            url="../src/assets/headshot.jpg"
+            url="/assets/headshot.jpg"
             scale={1}
             position={[leftX, leftY + 0.1, 0.1]}
             anchorY={"top"}
@@ -197,7 +197,7 @@ export function Scene() {
             ))}
           </group>
           <Image
-            url="../src/assets/About/github.png"
+            url="/assets/About/github.png"
             scale={0.4}
             position={[rightX + 0.75, rightY - 2.9, 0.1]}
             anchorX={"left"}
@@ -214,7 +214,7 @@ export function Scene() {
             transparent
           ></Image>
           <Image
-            url="../src/assets/About/utube.png"
+            url="/assets/About/utube.png"
             scale={0.5}
             position={[rightX + 0.25, rightY - 2.92, 0.1]}
             anchorX={"left"}
@@ -231,7 +231,7 @@ export function Scene() {
             transparent
           ></Image>
           <Image
-            url="../src/assets/About/linkedin.png"
+            url="/assets/About/linkedin.png"
             scale={0.4}
             position={[rightX + 1.25, rightY - 2.9, 0.1]}
             anchorX={"left"}

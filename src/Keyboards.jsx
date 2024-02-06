@@ -111,7 +111,7 @@ export function Scene() {
   });
   const imagePaths = Array.from(
     { length: 17 },
-    (_, i) => `../src/assets/Keyboards/${i + 1}.jpg`
+    (_, i) => `/assets/Keyboards/${i + 1}.jpg`
   );
   const ref = useRef();
   const scroll = useScroll();

@@ -99,7 +99,7 @@ export function Scene() {
   });
   const imagePaths = Array.from(
     { length: 10 },
-    (_, i) => `../src/assets/Works/${i + 1}.jpg`
+    (_, i) => `/assets/Works/${i + 1}.jpg`
   );
   const ref = useRef();
   const scroll = useScroll();
