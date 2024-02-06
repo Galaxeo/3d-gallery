@@ -18,7 +18,7 @@ extend({ RoundedPlaneGeometry: geometry.RoundedPlaneGeometry });
 
 export function Scene() {
   // leftX - rightX = 1.25
-  const leftY = 0.8;
+  const leftY = 0.7;
   const leftX = -2;
   const rightY = 1.8;
   const rightX = -0.75;
@@ -82,7 +82,7 @@ export function Scene() {
           <Image
             url="../src/assets/headshot.jpg"
             scale={1}
-            position={[leftX, leftY, 0.1]}
+            position={[leftX, leftY + 0.1, 0.1]}
             anchorY={"top"}
           >
             <roundedPlaneGeometry args={[2, 2, 0.5]} />
@@ -152,7 +152,7 @@ export function Scene() {
           </Text>
           <Text
             font={"./RodinM.woff"}
-            position={[rightX, rightY - 1.45, 0.1]} // 2.2-0.8=1.4
+            position={[rightX, rightY - 1.75, 0.1]} // 2.2-0.8=1.4
             color={"white"}
             fontSize={0.2}
             anchorX={"left"}
@@ -166,7 +166,7 @@ export function Scene() {
                 key={index}
                 url={url}
                 scale={0.3}
-                position={[rightX + 1.75 + index * 0.33, rightY - 1.65, 0.1]}
+                position={[rightX + 1.75 + index * 0.33, rightY - 1.95, 0.1]}
                 anchorX={"left"}
                 anchorY={"top"}
                 transparent
@@ -175,7 +175,7 @@ export function Scene() {
           </group>
           <Text
             font={"./RodinM.woff"}
-            position={[rightX, rightY - 1.8, 0.1]} // 2.2-0.45 = 1.75
+            position={[rightX, rightY - 2.1, 0.1]} // 2.2-0.45 = 1.75
             color={"white"}
             fontSize={0.2}
             anchorX={"left"}
@@ -189,13 +189,64 @@ export function Scene() {
                 key={index}
                 url={url}
                 scale={0.3}
-                position={[rightX + 0.8 + index * 0.33, rightY - 2, 0.1]}
+                position={[rightX + 0.8 + index * 0.33, rightY - 2.3, 0.1]}
                 anchorX={"left"}
                 anchorY={"top"}
                 transparent
               ></Image>
             ))}
           </group>
+          <Image
+            url="../src/assets/About/github.png"
+            scale={0.4}
+            position={[rightX + 0.75, rightY - 2.9, 0.1]}
+            anchorX={"left"}
+            anchorY={"top"}
+            onPointerOver={() => {
+              document.body.style.cursor = "pointer";
+            }}
+            onPointerOut={() => {
+              document.body.style.cursor = "default";
+            }}
+            onClick={() => {
+              window.open("https://github.com/galaxeo");
+            }}
+            transparent
+          ></Image>
+          <Image
+            url="../src/assets/About/utube.png"
+            scale={0.5}
+            position={[rightX + 0.25, rightY - 2.92, 0.1]}
+            anchorX={"left"}
+            anchorY={"top"}
+            onPointerOver={() => {
+              document.body.style.cursor = "pointer";
+            }}
+            onPointerOut={() => {
+              document.body.style.cursor = "default";
+            }}
+            onClick={() => {
+              window.open("https://www.youtube.com/@galaxeo");
+            }}
+            transparent
+          ></Image>
+          <Image
+            url="../src/assets/About/linkedin.png"
+            scale={0.4}
+            position={[rightX + 1.25, rightY - 2.9, 0.1]}
+            anchorX={"left"}
+            anchorY={"top"}
+            onPointerOver={() => {
+              document.body.style.cursor = "pointer";
+            }}
+            onPointerOut={() => {
+              document.body.style.cursor = "default";
+            }}
+            onClick={() => {
+              window.open("https://www.linkedin.com/in/jhcheok/");
+            }}
+            transparent
+          ></Image>
         </Billboard>
       </animated.group>
     </>
