@@ -1,8 +1,8 @@
-# React + Vite
+# [cheok.works](https://cheok.works)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### WIP
+- Mobile-friendly view/interaction
+- About page
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Details
+This project was done utilizing primarily React and Three.js through Vite. Three.js was implemented through several Poimandres packages like React Three Fiber and Drei.
