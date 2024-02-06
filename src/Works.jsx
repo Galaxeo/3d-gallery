@@ -89,6 +89,13 @@ const workDescriptions = [
       "A repository of all the projects I've completed from The Odin Project's full stack curriculum.",
     link: "https://github.com/Galaxeo/odin",
   },
+  {
+    title: "Website (Version 2.0)",
+    tools: "React, Vite, Three.js (React-Three-Fiber)",
+    description:
+      "The second version of my personal website designed from the ground up to showcase the skills learned throughout my journey as a front-end developer.",
+    link: "https://github.com/Galaxeo/website-v2",
+  },
 ];
 
 export function Scene() {
@@ -98,7 +105,7 @@ export function Scene() {
     config: { mass: 0.7, tension: 70, friction: 20 },
   });
   const imagePaths = Array.from(
-    { length: 10 },
+    { length: 11 },
     (_, i) => `/assets/Works/${i + 1}.jpg`
   );
   const ref = useRef();
