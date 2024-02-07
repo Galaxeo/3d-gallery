@@ -6,6 +6,7 @@ import {
   Text,
   Billboard,
   ScrollControls,
+  Scroll,
   useScroll,
   Html,
 } from "@react-three/drei";
@@ -118,9 +119,69 @@ export function Scene() {
   const radius = 2;
   const [selectedImage, setSelectedImage] = useState(null);
   const [hoveredBack, setHoveredBack] = useState(false);
+  const [hoveredPrev, setHoveredPrev] = useState(false);
+  const [hoveredNext, setHoveredNext] = useState(false);
+  const [buttonHit, setButtonHit] = useState(0);
   const [, setLocation] = useLocation();
+  const [lastScrollOffset, setLastScrollOffset] = useState(0);
+  const [targetRotation, setTargetRotation] = useState(0);
+
+  function handleButtonHit(num) {
+    setButtonHit(num);
+  }
+
+  function handleScrollDogshit(curr, delta) {
+    const buffer = 0.3;
+    let clampedOffset = Math.max(-buffer, Math.min(1 + buffer, scroll.offset));
+    let direction = Math.sign(clampedOffset - lastScrollOffset); // Get the direction of the scroll
+    setLastScrollOffset(clampedOffset); // Update the last scroll offset
+    if (direction === 1) {
+      curr += delta;
+    } else if (direction === -1) {
+      curr -= delta;
+    }
+    // make sure that curr isn't above 2pi or below 0
+    if (curr > Math.PI * 2) {
+      curr -= Math.PI * 2;
+    } else if (curr < 0) {
+      curr += Math.PI * 2;
+    }
+    return curr;
+  }
   useFrame((state, delta) => {
-    ref.current.rotation.y = -scroll.offset * (Math.PI * 2);
+    if (buttonHit == 0) {
+      // ref.current.rotation.y += scroll.delta * (Math.PI * 2);
+      ref.current.rotation.y = handleScrollDogshit(
+        ref.current.rotation.y,
+        scroll.delta * (Math.PI * 2)
+      );
+    } else if (buttonHit == 1) {
+      setTargetRotation(
+        (ref.current.rotation.y + (Math.PI * 2) / keyboardDescriptions.length) %
+          (Math.PI * 2)
+      );
+      setButtonHit(0);
+    } else if (buttonHit == -1) {
+      setTargetRotation(
+        (ref.current.rotation.y - (Math.PI * 2) / keyboardDescriptions.length) %
+          (Math.PI * 2)
+      );
+      setButtonHit(0);
+    }
+    if (targetRotation !== null) {
+      const rotationSpeed = 0.01;
+      let diff = targetRotation - ref.current.rotation.y;
+      if (Math.abs(diff) > Math.PI) {
+        // If the difference is greater than Math.PI, rotate in the opposite direction
+        diff = diff > 0 ? diff - Math.PI * 2 : diff + Math.PI * 2;
+      }
+      if (Math.abs(diff) > rotationSpeed) {
+        ref.current.rotation.y += Math.sign(diff) * rotationSpeed;
+      } else {
+        ref.current.rotation.y = targetRotation;
+        setTargetRotation(null);
+      }
+    }
     state.events.update();
     easing.damp3(state.camera.position, [0, 0.5, 9], 0.3, delta);
     state.camera.lookAt(0, 0, 0);
@@ -213,15 +274,6 @@ export function Scene() {
             >
               Switches
             </Text>
-            {/* <Text
-              font={"./RodinM.woff"}
-              position={[3.6, 2.2, 0]}
-              anchorX={"right"}
-              color={"white"}
-              fontSize={0.3}
-            >
-              ?
-            </Text> */}
             <Text
               font={"./RodinM.woff"}
               position={[3.6, -2.2, 0]}
@@ -251,6 +303,57 @@ export function Scene() {
             >
               Back
             </Text>
+            <Text
+              onPointerOver={() => {
+                setHoveredPrev(true);
+                document.body.style.cursor = "pointer";
+              }}
+              onPointerOut={() => {
+                setHoveredPrev(false);
+                document.body.style.cursor = "default";
+              }}
+              onClick={() => {
+                handleButtonHit(1);
+              }}
+              font={hoveredPrev ? "./RodinM.woff" : "./RodinL.woff"}
+              position={[-3.7, 0, 0]}
+              anchorX={"right"}
+              color={"white"}
+              fontSize={0.2}
+            >
+              {"<"}
+            </Text>
+            <Text
+              onPointerOver={() => {
+                setHoveredNext(true);
+                document.body.style.cursor = "pointer";
+              }}
+              onPointerOut={() => {
+                setHoveredNext(false);
+                document.body.style.cursor = "default";
+              }}
+              onClick={() => {
+                handleButtonHit(-1);
+              }}
+              font={hoveredNext ? "./RodinM.woff" : "./RodinL.woff"}
+              position={[3.7, 0, 0]}
+              anchorX={"left"}
+              color={"white"}
+              fontSize={0.2}
+            >
+              {">"}
+            </Text>
+            {/* {showHelper && (
+              <Text
+                font={"./RodinM.woff"}
+                position={[4.6, -2.8, 0]}
+                anchorX={"right"}
+                color={"white"}
+                fontSize={0.2}
+              >
+                Try scrolling!
+              </Text>
+            )} */}
           </Billboard>
         )}
       </animated.group>
@@ -268,7 +371,7 @@ export function Keyboards() {
           </Html>
         }
       >
-        <ScrollControls infinite>
+        <ScrollControls infinite pages={keyboardDescriptions.length / 8}>
           <Scene />
         </ScrollControls>
       </Suspense>
